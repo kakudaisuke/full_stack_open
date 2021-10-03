@@ -19,23 +19,27 @@ const Statistic = (props) => {
 }
 
 const Statistics = (props) => {
-  const good = props.good
-  const neutral = props.neutral
-  const bad = props.bad
-  const all = props.all
-  const av = (good.score + neutral.score + bad.score) / all.count || 0
-  const positive = good / all.count
+  const { good, neutral, bad } = props
+  const goodText = good.text
+  const goodCount = good.count
+  const neutralText = neutral.text
+  const neutralCount = neutral.count
+  const badText = bad.text
+  const badCount = bad.count
+  const allCount = goodCount + neutralCount + badCount
+  const av = (goodCount * 1 + neutralCount * 0 + badCount * -1) / allCount || 0
+  const positiveRatio = goodCount / allCount
 
-  if (all.count === 0) return "No feedback given";
+  if (allCount === 0) return "No feedback given";
 
   return (
     <>
-      <p>{good.text} {good.score}</p>
-      <p>{neutral.text} {neutral.score}</p>
-      <p>{bad.text} {bad.score}</p>
-      <p>{all.text} {all.count}</p>
+      <p>{goodText} {goodCount}</p>
+      <p>{neutralText} {neutralCount}</p>
+      <p>{badText} {badCount}</p>
+      <p>all { allCount }</p>
       <p>average {av} %</p>
-      <p>positive {bad.score} %</p>
+      <p>positive { positiveRatio } %</p>
     </>
   )
 }
@@ -46,19 +50,18 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
-  const all_obj = {text: "all", count: good + neutral + bad}
-  const good_obj = {text: "good", score: good * 1}
-  const neutral_obj = {text: "neutral", score: neutral * 0}
-  const bad_obj = {text: "bad", score: bad * -1}
+  const good_obj = { text: "good", count: good }
+  const neutral_obj = { text: "neutral", count: neutral }
+  const bad_obj = { text: "bad", count: bad }
 
   return (
     <>
       <Title text="give feedback" />
       <Button text="good" handleClick={()=> setGood(good + 1)} />
       <Button text="neutral" handleClick={()=> setNeutral(neutral + 1)} />
-      <Button text="good" handleClick={()=> setBad(bad + 1)} />
+      <Button text="bad" handleClick={()=> setBad(bad + 1)} />
       <Title text="statistics" />
-      <Statistics good={good_obj} neutral={neutral_obj} bad={bad_obj} all={all_obj} />
+      <Statistics good={good_obj} neutral={neutral_obj} bad={bad_obj} />
     </>
   )
 }
