@@ -12,9 +12,12 @@ const Button = (props) => {
   )
 }
 
-const Statistic = (props) => {
+const StatisticLine = (props) => {
   return (
-    <p>{props.text} {props.score}{props.unit}</p>
+    <>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </>
   )
 }
 
@@ -34,12 +37,25 @@ const Statistics = (props) => {
 
   return (
     <>
-      <p>{goodText} {goodCount}</p>
-      <p>{neutralText} {neutralCount}</p>
-      <p>{badText} {badCount}</p>
-      <p>all { allCount }</p>
-      <p>average {av} %</p>
-      <p>positive { positiveRatio } %</p>
+      <table>
+        <tbody>
+          <tr><StatisticLine text={goodText} value={goodCount} /></tr>
+          <tr><StatisticLine text={neutralText} value={neutralCount} /></tr>
+          <tr><StatisticLine text={badText} value={badCount} /></tr>
+          <tr>
+            <td>all</td>
+            <td>{ allCount }</td>
+          </tr>
+          <tr>
+            <td>average</td>
+            <td>{ av }</td>
+          </tr>
+          <tr>
+            <td>positive</td>
+            <td>{ positiveRatio } %</td>
+          </tr>
+        </tbody>
+      </table>
     </>
   )
 }
