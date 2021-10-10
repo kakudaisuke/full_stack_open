@@ -17,8 +17,19 @@ const Part = ({ parts }) => {
 }
 
 const Total = ({ parts }) => {
-  let total = 0;
-  parts.map(part => total += part.exercises);
+  // (1)My initial answer
+  // let total = 0;
+  // parts.map(part => total += part.exercises);
+
+  // (2)with reduce() method
+  const reducer = (p, c) => p + c;
+
+  const exercisesArr = [];
+  parts.map(part => {
+    exercisesArr.push(part.exercises);
+  })
+  const total = exercisesArr.reduce(reducer);
+
   return <b>total of {total} exercises</b>
 }
 
