@@ -4,13 +4,30 @@ const Header = ({ name }) => {
   return <h1>{name}</h1>
 }
 
-
-const Course = ({ parts }) => {
+const Part = ({ parts }) => {
   return (
     <>
-      <p>{parts[0].name} {parts[0].exercises}</p>
-      <p>{parts[1].name} {parts[1].exercises}</p>
-      <p>{parts[2].name} {parts[2].exercises}</p>
+      {parts.map(part =>
+        <p key={part.id}>
+          {part.name} {part.exercises}
+        </p>
+      )}
+    </>
+  )
+}
+
+const Total = ({ parts }) => {
+  let total = 0;
+  parts.map(part => total += part.exercises);
+  return <b>total of {total} exercises</b>
+}
+
+const Course = ({ course }) => {
+  return (
+    <>
+      <Header name={course.name} />
+      <Part parts={course.parts} />
+      <Total parts={course.parts} />
     </>
   )
 }
@@ -34,14 +51,18 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }
 
   return (
     <>
-      <Header name={course.name} />
-      <Course parts={course.parts} />
+      <Course course={course} />
     </>
   )
 }
